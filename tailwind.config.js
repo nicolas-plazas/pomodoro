@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	important: true,
 	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
@@ -47,5 +46,13 @@ module.exports = {
 			},
 		},
 	},
+	safelist: [
+		'bg-chestnut',
+		'bg-paradiso',
+		'bg-calypso',
+		'text-chestnut',
+		'text-paradiso',
+		'text-calypso',
+	],
 	plugins: [],
 };
