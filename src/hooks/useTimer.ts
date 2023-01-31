@@ -5,19 +5,35 @@ interface TimerProps {
 	isRunning: boolean;
 }
 
-export const useTimer = (params: TimerProps) => {
+const handleGetTime = (currentTimer: number) => {
+	const minutes = Math.trunc(currentTimer / 60);
+	const seconds = currentTimer % 60;
+
+	return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+};
+
+const useTimer = (params: TimerProps) => {
 	const { initialTime, isRunning } = params;
-	const [time, setTime] = useState(initialTime);
+	const [timer, setTimer] = useState(initialTime);
 
 	useEffect(() => {
-		if (isRunning && time > 0) {
+		setTimer(initialTime);
+	}, [initialTime]);
+
+	useEffect(() => {
+		if (isRunning && timer > 0) {
 			const interval = setInterval(() => {
-				setTime((prevTime) => prevTime - 1);
+				setTimer((prevTimer) => prevTimer - 1);
 			}, 1000);
 
 			return () => clearInterval(interval);
 		}
-	}, [isRunning, time]);
+	}, [isRunning, timer]);
 
-	return time;
+	return {
+		timer,
+		formattedTime: handleGetTime(timer),
+	};
 };
+
+export default useTimer;
